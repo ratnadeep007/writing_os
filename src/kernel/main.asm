@@ -16,11 +16,14 @@ puts:
   push ax
 
 .loop:
-  lodsb          ; loads next character in al
-  or al, al      ; verify is next character is null
+  ; loads next character in al
+  lodsb
+  ; verify is next character is null          
+  or al, al      
   jz .done
 
-  mov ah, 0x0e   ; call bios interrupt
+  ; call bios interrupt
+  mov ah, 0x0e   
   int 0x10
 
   jmp .loop
@@ -32,13 +35,15 @@ puts:
 
 main:
   ; setup data segment
-  mov ax, 0      ; can't write to ds/es directly
+  ; can't write to ds/es directly
+  mov ax, 0      
   mov ds, ax
   mov es, ax
 
   ; setup stack
   mov ss, ax
-  mov sp, 0x7C00 ; stack grows downwards from where we loaded in memory
+  ; stack grows downwards from where we loaded in memory
+  mov sp, 0x7C00
 
   ; print message
   mov si, msg_hello
